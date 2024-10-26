@@ -26,6 +26,7 @@ const buttonStyles = cva(["hover: bg-secondary-hover", "transition-colors"], {
       icon: [
         "rounded-full",
         "w-10",
+        "h-10",
         "flex",
         "items-center",
         "justify-center",
