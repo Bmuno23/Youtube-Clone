@@ -2,6 +2,7 @@ import { ArrowLeft, Bell, Menu, Mic, Search, Upload, User } from "lucide-react";
 import logo from "../assets/Screenshot 2024-10-26 at 10.02.31 AM.png";
 import { Button } from "../components/Button";
 import { useState } from "react";
+import { useSidebarContext } from "../contexts/SidebarContext";
 
 export function PageHeader() {
 
@@ -11,23 +12,12 @@ export function PageHeader() {
     //main div (whole Page header)------------
     <div /*main container*/ className="flex gap-10 lg:gap-20 justify-between pt-2 mb-6 mx-4">
 
-      {/* Left side of page header ------*/}
-      <div /* Button - YT logo :container*/ className={`flex gap-4 items-center flex-shrink-0 ${showFullWidthSearch ? "hidden" : "flex"}`}>
-        {/*element of "Button" for drop down menu - brings the "Button" from tsx file - has some classes which are specified within tsx file  */}
-        <Button variant="ghost" size="icon">
-          {/* Menu icon from lucide-react library */}
-          <Menu></Menu>
-        </Button>
-        {/* img of youtube logo - has link to nowhere bc just front end proj */}
-        <a href="/">
-          <img src={logo} alt="logo" className="h-12" />
-        </a>
-      </div>
-
+      <PageHeaderFirstSection hidden={showFullWidthSearch}></PageHeaderFirstSection>
       {/* Middle of page header ------*/}
       <form /* Search bar - Microphone - Return :container*/ className={`gap-4 flex-grow justify-center ${showFullWidthSearch ? "flex" : "hidden md:flex"}`}>
 
         {/* Return button when search bar resizes to take up full header (on smaller screen sizes) */}
+        
       {showFullWidthSearch && (<Button 
       onClick={() => setShowFullWidthSearch(false)}
       size="icon" 
@@ -82,4 +72,25 @@ export function PageHeader() {
       </div>
     </div>
   );
+}
+
+
+type PageHeaderFirstSectionProps ={
+  hidden?: boolean
+}
+
+export function PageHeaderFirstSection({ hidden = false }: PageHeaderFirstSectionProps){
+  const{toggle} = useSidebarContext()
+  {/* Left side of page header ------*/}
+  return <div /* Button - YT logo :container*/ className={`flex gap-4 items-center flex-shrink-0 ${hidden ? "hidden" : "flex"}`}>
+  {/*element of "Button" for drop down menu - brings the "Button" from tsx file - has some classes which are specified within tsx file  */}
+  <Button onClick={toggle} variant="ghost" size="icon">
+    {/* Menu icon from lucide-react library */}
+    <Menu></Menu>
+  </Button>
+  {/* img of youtube logo - has link to nowhere bc just front end proj */}
+  <a href="/">
+    <img src={logo} alt="logo" className="h-12" />
+  </a>
+</div>
 }
